@@ -1,0 +1,55 @@
+# Model configuration
+model:
+  type: autoencoder  # autoencoder, unet, temporal
+  in_channels: 3
+  out_channels: 3
+  hidden_channels: 64
+  base_channels: 64
+  depth: 4
+  num_frames: 5
+
+# Data configuration
+data:
+  train_path: data/raw/train
+  val_path: data/raw/val
+  test_path: data/raw/test
+  batch_size: 8
+  num_workers: 4
+  frame_size: [256, 256]
+  temporal_window: 1
+  noise_type: gaussian  # gaussian, poisson, salt_pepper
+  noise_level: 0.1
+
+# Training configuration
+training:
+  num_epochs: 100
+  learning_rate: 1e-3
+  weight_decay: 1e-4
+  patience: 10
+  save_best: true
+  device: auto
+
+# Loss configuration
+loss:
+  l1_weight: 1.0
+  charbonnier_weight: 1.0
+  perceptual_weight: 0.1
+  temporal_weight: 0.1
+  use_perceptual: true
+  use_temporal: true
+
+# Paths
+paths:
+  save_dir: checkpoints
+  log_dir: logs
+  results_dir: results
+  assets_dir: assets
+
+# Logging
+logging:
+  log_level: INFO
+  log_interval: 10
+  save_interval: 5
+
+# Reproducibility
+seed: 42

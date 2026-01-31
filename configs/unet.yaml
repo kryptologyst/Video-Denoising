@@ -1,0 +1,53 @@
+# UNet model configuration
+model:
+  type: unet
+  in_channels: 3
+  out_channels: 3
+  base_channels: 64
+  depth: 4
+
+# Data configuration
+data:
+  train_path: data/raw/train
+  val_path: data/raw/val
+  test_path: data/raw/test
+  batch_size: 4  # Smaller batch size for UNet
+  num_workers: 4
+  frame_size: [256, 256]
+  temporal_window: 1
+  noise_type: gaussian
+  noise_level: 0.1
+
+# Training configuration
+training:
+  num_epochs: 150
+  learning_rate: 5e-4  # Lower learning rate for UNet
+  weight_decay: 1e-4
+  patience: 15
+  save_best: true
+  device: auto
+
+# Loss configuration
+loss:
+  l1_weight: 1.0
+  charbonnier_weight: 1.0
+  perceptual_weight: 0.2  # Higher perceptual weight for UNet
+  temporal_weight: 0.1
+  use_perceptual: true
+  use_temporal: false
+
+# Paths
+paths:
+  save_dir: checkpoints/unet
+  log_dir: logs/unet
+  results_dir: results/unet
+  assets_dir: assets/unet
+
+# Logging
+logging:
+  log_level: INFO
+  log_interval: 10
+  save_interval: 5
+
+# Reproducibility
+seed: 42
